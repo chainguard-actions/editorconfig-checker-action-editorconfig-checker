@@ -1,15 +1,52 @@
-# editorconfig-checker/action-editorconfig-checker
+# Setup EditorConfig Action
 
-Using editorconfig-checker to verify your files
+This action uses [editorconfig-checker][usage] to validate files.
 
-Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/editorconfig-checker/action-editorconfig-checker](https://github.com/editorconfig-checker/action-editorconfig-checker).
+[usage]: https://github.com/editorconfig-checker/editorconfig-checker#usage
 
-## Versions
+## Usage
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v1.0.0 | [`v1.0.0`](https://github.com/chainguard-actions/action-editorconfig-checker/tree/v1.0.0) | — |
-| v2.0.0 | [`v2.0.0`](https://github.com/chainguard-actions/action-editorconfig-checker/tree/v2.0.0) | — |
+### Pre-requisites
+
+Create a workflow `.yml` file in your repositories `.github/workflows` directory.
+An [example workflow](#example-workflow) is available below.
+For more information, reference the GitHub Help Documentation for [Creating a workflow file][creating-a-workflow-file].
+
+[creating-a-workflow-file]: https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file
+
+### Inputs
+
+| Field     | Description                 |
+| --------- | --------------------------- |
+| `version` | Version (default: `latest`) |
+
+### Example workflow
+
+```yaml
+name: EditorConfig Checker
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  editorconfig:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up editorconfig-checker
+        uses: editorconfig-checker/action-editorconfig-checker@main
+
+      - name: Run editorconfig-checker
+        run: editorconfig-checker
+```
+
+## License
+
+[MIT LICENSE](LICENSE)
 
 ## Privacy
 
