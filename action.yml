@@ -1,0 +1,10 @@
+name: 'editorconfig-checker-action'
+description: 'Using editorconfig-checker/editorconfig-checker to verify your files'
+icon: 'check'
+color: 'white'
+outputs:
+  output:
+    description: 'validation results'
+runs:
+  using: 'docker'
+  image: 'src/Dockerfile'
