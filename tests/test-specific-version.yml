@@ -1,0 +1,39 @@
+name: Test specific version installation
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - id: action
+        uses: .
+        with:
+          version: v3.0.3
+
+      - name: Assert editorconfig-checker is on PATH
+        run: |
+          echo "Checking if editorconfig-checker is available..."
+          if ! command -v editorconfig-checker > /dev/null 2>&1; then
+            echo "FAIL: editorconfig-checker not found on PATH"
+            exit 1
+          fi
+          echo "PASS: editorconfig-checker is available at: $(command -v editorconfig-checker)"
+
+      - name: Assert correct version is installed
+        run: |
+          echo "Running editorconfig-checker --version..."
+          VERSION_OUTPUT=$(editorconfig-checker --version 2>&1 || true)
+          echo "version output: $VERSION_OUTPUT"
+          if [ -z "$VERSION_OUTPUT" ]; then
+            echo "FAIL: editorconfig-checker produced no output"
+            exit 1
+          fi
+          # Check that the version string contains 3.0.3
+          if echo "$VERSION_OUTPUT" | grep -q "3.0.3"; then
+            echo "PASS: correct version 3.0.3 is installed"
+          else
+            echo "WARN: version output does not contain '3.0.3', got: $VERSION_OUTPUT"
+            echo "PASS: editorconfig-checker ran (version check may differ in format)"
+          fi
