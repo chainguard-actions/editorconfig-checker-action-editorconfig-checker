@@ -1,0 +1,54 @@
+name: Test editorconfig-checker runs against files
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - id: action
+        name: Install editorconfig-checker
+        uses: .
+        with:
+          version: latest
+
+      - name: Create a compliant test file
+        run: |
+          mkdir -p /tmp/ec-test
+          cat > /tmp/ec-test/.editorconfig << 'EOF'
+          root = true
+
+          [*]
+          charset = utf-8
+          end_of_line = lf
+          indent_style = space
+          indent_size = 2
+          insert_final_newline = true
+          trim_trailing_whitespace = true
+          EOF
+          # Write a compliant file (LF endings, trailing newline, no trailing whitespace)
+          printf 'hello world\n' > /tmp/ec-test/compliant.txt
+
+      - name: Assert editorconfig-checker passes on compliant file
+        run: |
+          echo "Running editorconfig-checker on compliant file..."
+          cd /tmp/ec-test
+          if editorconfig-checker compliant.txt; then
+            echo "PASS: editorconfig-checker passed on compliant file"
+          else
+            echo "FAIL: editorconfig-checker failed on compliant file"
+            exit 1
+          fi
+
+      - name: Assert editorconfig-checker detects violations
+        run: |
+          echo "Creating a non-compliant file (trailing whitespace)..."
+          printf 'hello world   \n' > /tmp/ec-test/noncompliant.txt
+          cd /tmp/ec-test
+          if editorconfig-checker noncompliant.txt; then
+            echo "FAIL: editorconfig-checker should have detected trailing whitespace"
+            exit 1
+          else
+            echo "PASS: editorconfig-checker correctly detected violation"
+          fi
