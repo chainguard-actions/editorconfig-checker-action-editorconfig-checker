@@ -8,7 +8,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
-| v1.0.0 | [`v1.0.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v1.0.0) | — |
+| v1.0.0 | [`v1.0.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v1.0.0) | [`0527b11`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/0527b11555ed46afd00df746f35b79cb7f7b68c2) |
 | v2 | [`v2`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2) | — |
 | v2.0.0 | [`v2.0.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.0.0) | [`0ab3427`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/0ab3427a3f09b17c21d489172245be511e0a16ea) |
 | v2.1.0 | [`v2.1.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.1.0) | [`4b6cd61`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/4b6cd6190d435e7e084fb35e36a096e98506f7b9) |
