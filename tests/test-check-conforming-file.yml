@@ -1,0 +1,38 @@
+name: Test editorconfig-checker runs on conforming files
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: latest
+      - name: Create a conforming file and an editorconfig
+        run: |
+          mkdir -p /tmp/ec-test
+          cat > /tmp/ec-test/.editorconfig << 'EOF'
+          root = true
+
+          [*]
+          charset = utf-8
+          end_of_line = lf
+          indent_style = space
+          indent_size = 2
+          insert_final_newline = true
+          trim_trailing_whitespace = true
+          EOF
+          # Write a conforming file (LF line endings, trailing newline, no trailing whitespace)
+          printf 'hello world\n' > /tmp/ec-test/conforming.txt
+      - name: Run editorconfig-checker on conforming file
+        run: |
+          echo "Running editorconfig-checker on conforming file..."
+          cd /tmp/ec-test
+          if editorconfig-checker conforming.txt; then
+            echo "PASS: editorconfig-checker passed on conforming file"
+          else
+            echo "FAIL: editorconfig-checker failed on a conforming file"
+            exit 1
+          fi

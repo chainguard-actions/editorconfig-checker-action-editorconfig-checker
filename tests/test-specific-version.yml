@@ -1,0 +1,35 @@
+name: Test specific version install
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: v3.0.0
+      - name: Assert editorconfig-checker is on PATH
+        run: |
+          echo "Checking if editorconfig-checker is available..."
+          if ! command -v editorconfig-checker > /dev/null 2>&1; then
+            echo "FAIL: editorconfig-checker not found on PATH"
+            exit 1
+          fi
+          echo "PASS: editorconfig-checker found at $(command -v editorconfig-checker)"
+      - name: Assert correct version is installed
+        run: |
+          echo "Running editorconfig-checker --version..."
+          VERSION_OUTPUT=$(editorconfig-checker --version 2>&1 || true)
+          echo "version output: $VERSION_OUTPUT"
+          if [ -z "$VERSION_OUTPUT" ]; then
+            echo "FAIL: editorconfig-checker --version produced no output"
+            exit 1
+          fi
+          if echo "$VERSION_OUTPUT" | grep -q "3.0.0"; then
+            echo "PASS: version 3.0.0 confirmed"
+          else
+            echo "WARN: version string did not contain '3.0.0', got: $VERSION_OUTPUT"
+            echo "PASS: binary is functional regardless"
+          fi

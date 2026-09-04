@@ -1,18 +1,52 @@
-# editorconfig-checker/action-editorconfig-checker
+# Setup EditorConfig Action
 
-Using editorconfig-checker to verify your files
+This action uses [editorconfig-checker][usage] to validate files.
 
-Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/editorconfig-checker/action-editorconfig-checker](https://github.com/editorconfig-checker/action-editorconfig-checker).
+[usage]: https://github.com/editorconfig-checker/editorconfig-checker#usage
 
-## Versions
+## Usage
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v1.0.0 | [`v1.0.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v1.0.0) | [`0527b11`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/0527b11555ed46afd00df746f35b79cb7f7b68c2) |
-| v2 | [`v2`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2) | [`d2ed4fd`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/d2ed4fd072ae6f887e9407c909af0f585d2ad9f4) |
-| v2.0.0 | [`v2.0.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.0.0) | [`0ab3427`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/0ab3427a3f09b17c21d489172245be511e0a16ea) |
-| v2.1.0 | [`v2.1.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.1.0) | [`4b6cd61`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/4b6cd6190d435e7e084fb35e36a096e98506f7b9) |
-| v2.2.0 | [`v2.2.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.2.0) | [`840e866`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/840e866d93b8e032123c23bac69dece044d4d84c) |
+### Pre-requisites
+
+Create a workflow `.yml` file in your repositories `.github/workflows` directory.
+An [example workflow](#example-workflow) is available below.
+For more information, reference the GitHub Help Documentation for [Creating a workflow file][creating-a-workflow-file].
+
+[creating-a-workflow-file]: https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file
+
+### Inputs
+
+| Field     | Description                 |
+| --------- | --------------------------- |
+| `version` | Version (default: `latest`) |
+
+### Example workflow
+
+```yaml
+name: EditorConfig Checker
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  editorconfig:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up editorconfig-checker
+        uses: editorconfig-checker/action-editorconfig-checker@main
+
+      - name: Run editorconfig-checker
+        run: editorconfig-checker
+```
+
+## License
+
+[MIT LICENSE](LICENSE)
 
 ## Privacy
 

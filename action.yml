@@ -1,0 +1,22 @@
+name: editorconfig-checker-action
+description: Using editorconfig-checker to verify your files
+author: septs
+
+inputs:
+  github-token:
+    description: GitHub Token
+    default: ${{ github.token }}
+    required: true
+  version:
+    description: EditorConfig Checker Version
+    default: latest
+    required: true
+
+runs:
+  pre: chainguard-phonehome.js
+  using: node24
+  main: dist/index.js
+
+branding:
+  icon: check
+  color: white
