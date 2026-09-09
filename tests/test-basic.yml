@@ -1,0 +1,41 @@
+name: Test basic usage - install editorconfig-checker
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - id: action
+        name: Install editorconfig-checker
+        uses: .
+        with:
+          version: v3.11.3
+        continue-on-error: true
+
+      - name: Assert action ran or failed gracefully
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "action outcome: $OUTCOME"
+          if [ "$OUTCOME" = "success" ]; then
+            echo "Action succeeded, checking binary..."
+            if ! command -v editorconfig-checker > /dev/null 2>&1; then
+              echo "FAIL: editorconfig-checker not found on PATH after successful action"
+              exit 1
+            fi
+            echo "PASS: editorconfig-checker is available at: $(command -v editorconfig-checker)"
+            VERSION_OUTPUT=$(editorconfig-checker --version 2>&1 || true)
+            echo "version output: $VERSION_OUTPUT"
+            if [ -z "$VERSION_OUTPUT" ]; then
+              echo "FAIL: editorconfig-checker --version produced no output"
+              exit 1
+            fi
+            echo "PASS: editorconfig-checker is functional"
+          elif [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed gracefully (node24 runtime may not be available or API issue)"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi

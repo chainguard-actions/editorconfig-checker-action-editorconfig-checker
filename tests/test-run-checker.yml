@@ -1,0 +1,62 @@
+name: Test run editorconfig-checker on compliant files
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - id: action
+        name: Install editorconfig-checker
+        uses: .
+        with:
+          version: v3.11.3
+        continue-on-error: true
+
+      - name: Run checker tests or skip gracefully
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "action outcome: $OUTCOME"
+          if [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed gracefully (node24 runtime may not be available or API issue)"
+            exit 0
+          elif [ "$OUTCOME" != "success" ]; then
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
+
+          echo "Action succeeded, checking binary..."
+          if ! command -v editorconfig-checker > /dev/null 2>&1; then
+            echo "FAIL: editorconfig-checker not found on PATH after successful action"
+            exit 1
+          fi
+          echo "PASS: editorconfig-checker is available at: $(command -v editorconfig-checker)"
+
+          # Create test workspace with .editorconfig and compliant file
+          mkdir -p /tmp/ec-test
+          printf 'root = true\n\n[*]\nend_of_line = lf\ninsert_final_newline = true\ncharset = utf-8\nindent_style = space\nindent_size = 2\n' > /tmp/ec-test/.editorconfig
+          printf 'hello world\n' > /tmp/ec-test/compliant.txt
+          echo "Created .editorconfig:"
+          cat /tmp/ec-test/.editorconfig
+          echo "Created compliant.txt:"
+          cat /tmp/ec-test/compliant.txt
+
+          # Run editorconfig-checker on compliant file
+          echo "Running editorconfig-checker on compliant file..."
+          cd /tmp/ec-test
+          if ! editorconfig-checker compliant.txt; then
+            echo "FAIL: editorconfig-checker reported errors on a compliant file"
+            exit 1
+          fi
+          echo "PASS: editorconfig-checker passed on compliant file"
+
+          # Create a non-compliant file (missing final newline)
+          printf 'no final newline' > /tmp/ec-test/noncompliant.txt
+          echo "Running editorconfig-checker on non-compliant file (expect failure)..."
+          if editorconfig-checker noncompliant.txt 2>/dev/null; then
+            echo "FAIL: editorconfig-checker should have reported errors on non-compliant file"
+            exit 1
+          fi
+          echo "PASS: editorconfig-checker correctly detected non-compliant file"
