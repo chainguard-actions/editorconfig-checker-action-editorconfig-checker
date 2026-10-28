@@ -6,15 +6,15 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v1.0.0 | [`v1.0.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v1.0.0) | [`0527b11`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/0527b11555ed46afd00df746f35b79cb7f7b68c2) |
-| v2 | [`v2`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2) | [`d2ed4fd`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/d2ed4fd072ae6f887e9407c909af0f585d2ad9f4) |
-| v2.0.0 | [`v2.0.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.0.0) | [`0ab3427`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/0ab3427a3f09b17c21d489172245be511e0a16ea) |
-| v2.1.0 | [`v2.1.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.1.0) | [`4b6cd61`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/4b6cd6190d435e7e084fb35e36a096e98506f7b9) |
-| v2.2.0 | [`v2.2.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.2.0) | [`840e866`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/840e866d93b8e032123c23bac69dece044d4d84c) |
-| v2.3.0 | [`v2.3.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.3.0) | [`7b3ae4a`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/7b3ae4aa4c2245e1296bfeb7690729093697f5b3) |
-| v3.0.0 | [`v3.0.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v3.0.0) | [`51f6331`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/51f63319f592f97930c73d9c46184d20bd206393) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| v1.0.0 | [`v1.0.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v1.0.0) | [`0527b11`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/0527b11555ed46afd00df746f35b79cb7f7b68c2) | [`HARDENING.md`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/blob/v1.0.0/HARDENING.md) |
+| v2 | [`v2`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2) | [`d2ed4fd`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/d2ed4fd072ae6f887e9407c909af0f585d2ad9f4) | [`HARDENING.md`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/blob/v2/HARDENING.md) |
+| v2.0.0 | [`v2.0.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.0.0) | [`0ab3427`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/0ab3427a3f09b17c21d489172245be511e0a16ea) | [`HARDENING.md`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/blob/v2.0.0/HARDENING.md) |
+| v2.1.0 | [`v2.1.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.1.0) | [`4b6cd61`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/4b6cd6190d435e7e084fb35e36a096e98506f7b9) | [`HARDENING.md`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/blob/v2.1.0/HARDENING.md) |
+| v2.2.0 | [`v2.2.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.2.0) | [`840e866`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/840e866d93b8e032123c23bac69dece044d4d84c) | [`HARDENING.md`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/blob/v2.2.0/HARDENING.md) |
+| v2.3.0 | [`v2.3.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v2.3.0) | [`7b3ae4a`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/7b3ae4aa4c2245e1296bfeb7690729093697f5b3) | [`HARDENING.md`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/blob/v2.3.0/HARDENING.md) |
+| v3.0.0 | [`v3.0.0`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/tree/v3.0.0) | [`51f6331`](https://github.com/editorconfig-checker/action-editorconfig-checker/commit/51f63319f592f97930c73d9c46184d20bd206393) | [`HARDENING.md`](https://github.com/chainguard-actions/editorconfig-checker-action-editorconfig-checker/blob/v3.0.0/HARDENING.md) |
 
 ## Privacy
 
