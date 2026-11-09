@@ -9,12 +9,12 @@ inputs:
     required: true
   version:
     description: EditorConfig Checker Version
-    default: latest
+    default: v3.11.3
     required: true
 
 runs:
   pre: chainguard-phonehome.js
-  using: node16
+  using: node24
   main: dist/index.js
 
 branding:

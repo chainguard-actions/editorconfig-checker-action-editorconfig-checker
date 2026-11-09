@@ -1,0 +1,34 @@
+name: Test installed checker validates files
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: v3.11.3
+      - name: Assert clean files pass
+        run: |
+          D="$(mktemp -d)"
+          cd "$D"
+          printf 'root = true\n\n[*]\ntrim_trailing_whitespace = true\ninsert_final_newline = true\n' > .editorconfig
+          printf 'hello\nworld\n' > good.txt
+          if ! editorconfig-checker; then
+            echo "FAIL: clean files should pass"
+            exit 1
+          fi
+          echo "PASS"
+      - name: Assert violating files fail
+        run: |
+          D="$(mktemp -d)"
+          cd "$D"
+          printf 'root = true\n\n[*]\ntrim_trailing_whitespace = true\ninsert_final_newline = true\n' > .editorconfig
+          printf 'hello   \nworld' > bad.txt
+          if editorconfig-checker; then
+            echo "FAIL: violating file should fail the check"
+            exit 1
+          fi
+          echo "PASS"

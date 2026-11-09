@@ -1,0 +1,40 @@
+name: Test latest version install
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          version: latest
+      - name: Assert latest installs, or fails cleanly when the asset is missing
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "success" ]; then
+            if ! command -v editorconfig-checker >/dev/null 2>&1; then
+              echo "FAIL: editorconfig-checker not found on PATH"
+              exit 1
+            fi
+            OUT="$(editorconfig-checker -version 2>&1)" || { echo "FAIL: -version exited non-zero: $OUT"; exit 1; }
+            echo "version output: $OUT"
+            if ! echo "$OUT" | grep -qE '[0-9]+\.[0-9]+\.[0-9]+'; then
+              echo "FAIL: expected a semantic version in output"
+              exit 1
+            fi
+            echo "PASS: latest installed"
+          elif [ "$OUTCOME" = "failure" ]; then
+            if command -v editorconfig-checker >/dev/null 2>&1; then
+              echo "FAIL: step failed but a binary was still added to PATH"
+              exit 1
+            fi
+            echo "PASS: latest release has no matching ec-linux-amd64 asset; action failed cleanly"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
